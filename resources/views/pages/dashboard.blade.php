@@ -193,7 +193,10 @@ body {
             <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>0</h3>
+                <h3><?php 
+                                            $count = \App\Models\Incident::all();
+                                            echo count($count);
+                                        ?></h3>
 
                     <p>Total Incident</p>
                 </div>
@@ -203,9 +206,9 @@ body {
                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 <div class="small-box-footer">
                     <?php 
-                                $count = \App\Models\User::get()->last();
+                                $count = \App\Models\Incident::get()->last();
                             ?>
-                    @if (!!empty($count))
+                    @if (!empty($count))
                     <i class="fa fa-refresh"></i> Update Since {{$count->created_at->diffForHumans()}}
                     @else
                     {{__('No Records found')}}
