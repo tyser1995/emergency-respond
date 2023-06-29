@@ -395,8 +395,8 @@ body {
             </div>
         </div>
     </form> -->
-    <!-- d-block d-md-none d-lg-none d-xl-none -->
-    <div class="floatingButtonWrap">
+    <!-- d-block d-md-none d-lg-none d-xl-none mobile only-->
+    <div class="floatingButtonWrap d-block d-md-none d-lg-none d-xl-none">
         <div class="floatingButtonInner">
             <a href="#" class="floatingButton">
                 <i class="fa fa-plus icon-default"></i>
