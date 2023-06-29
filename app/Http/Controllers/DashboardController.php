@@ -13,6 +13,7 @@ use App\Models\Hotel;
 use App\Models\HotelGroup;
 use App\Models\Role;
 use App\Models\ContentDetailTab;
+use App\Models\IncidentType;
 
 use Illuminate\Http\Request;
 
@@ -59,9 +60,15 @@ class DashboardController extends Controller
         'hotelgrouplastupdate' => 54,
         ];
 
+        $incident_type = IncidentType::where('deleted_flag',0)
+        ->orderBy('incident_name','asc')
+        ->get();
 
         if (view()->exists("pages.dashboard")) {
-            return view("pages.dashboard", compact('totals'));
+            return view("pages.dashboard", [
+                'totals' => $totals,
+                'incident_type' => $incident_type 
+            ]);
         }
 
         return abort(404);
