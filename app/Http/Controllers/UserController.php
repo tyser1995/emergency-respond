@@ -154,7 +154,7 @@ class UserController extends Controller
     public function register(Request $request)
     {
         if($request->input('password') == $request->input('confirm_password')){
-            return User::create([
+            User::create([
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
                 'password' => Hash::make($request->input('password')),
