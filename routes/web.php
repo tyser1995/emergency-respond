@@ -36,6 +36,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('users/delete/{id}', ['as' => 'users/delete/{id}', 'uses' => 'App\Http\Controllers\UserController@delete']);
 	Route::resource('user', 'App\Http\Controllers\UserController');
 
+    //Webcam
+	Route::resource('webcam', 'App\Http\Controllers\WebcamController');
+    // Route::controller(WebcamController::class)->group(function () {
+    //     Route::get('webcam', 'index')->name('webcam.capture');
+    //     Route::post('webcam', 'store');
+    // });
+
+    //Incidents
+    Route::resource('incident', 'App\Http\Controllers\IncidentsController');
+
+    Route::get('incident_types',  ['as' => 'incident_types', 'uses' => 'App\Http\Controllers\IncidentTypesController@index']);
+    Route::get('incident_types/delete/{id}', ['as' => 'incident_types/delete/{id}', 'uses' => 'App\Http\Controllers\IncidentTypesController@delete']);
+    Route::resource('incident_type', 'App\Http\Controllers\IncidentTypesController');
+
     //User Management
     Route::get('employees', ['as' => 'employees', 'uses' => 'App\Http\Controllers\EmployeeController@index']);
     Route::get('employees/delete/{id}', ['as' => 'employees/delete/{id}', 'uses' => 'App\Http\Controllers\EmployeeController@delete']);

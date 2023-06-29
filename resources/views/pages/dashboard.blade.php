@@ -42,6 +42,103 @@ body {
 .custom-map-control-button:hover {
     background: rgb(235, 235, 235);
 }
+
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background: #fafbff;
+}
+
+.floatingButtonWrap {
+    display: block;
+    position: fixed;
+    bottom: 45px;
+    right: 45px;
+    z-index: 999999999;
+}
+
+.floatingButtonInner {
+    position: relative;
+}
+
+.floatingButton {
+    display: block;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    background: -webkit-linear-gradient(45deg, #8769a9, #507cb3);
+    background: -o-linear-gradient(45deg, #8769a9, #507cb3);
+    background: linear-gradient(45deg, #8769a9, #507cb3);
+    color: #fff;
+    line-height: 50px;
+    position: absolute;
+    border-radius: 50% 50%;
+    bottom: 0px;
+    right: 0px;
+    border: 5px solid #b2bedc;
+    /* opacity: 0.3; */
+    opacity: 1;
+    transition: all 0.4s;
+}
+
+.floatingButton .fa {
+    font-size: 15px !important;
+}
+
+.floatingButton.open,
+.floatingButton:hover,
+.floatingButton:focus,
+.floatingButton:active {
+    opacity: 1;
+    color: #fff;
+}
+
+
+.floatingButton .fa {
+    transform: rotate(0deg);
+    transition: all 0.4s;
+}
+
+.floatingButton.open .fa {
+    transform: rotate(270deg);
+}
+
+.floatingMenu {
+    position: absolute;
+    bottom: 60px;
+    right: 0px;
+    /* width: 200px; */
+    display: none;
+}
+
+.floatingMenu li {
+    width: 100%;
+    float: right;
+    list-style: none;
+    text-align: right;
+    margin-bottom: 5px;
+}
+
+.floatingMenu li a {
+    padding: 8px 15px;
+    display: inline-block;
+    background: #ccd7f5;
+    color: #6077b0;
+    border-radius: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: all 0.4s;
+    /* -webkit-box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.22);
+    box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.22); */
+    -webkit-box-shadow: 1px 3px 5px rgba(211, 224, 255, 0.5);
+    box-shadow: 1px 3px 5px rgba(211, 224, 255, 0.5);
+}
+
+.floatingMenu li a:hover {
+    margin-right: 10px;
+    text-decoration: none;
+}
 </style>
 <div class="container-fluid">
     <!-- Content Header (Page header) -->
@@ -212,12 +309,148 @@ body {
         </div>
     </div>
     <!-- /.card -->
+
+    <div class="modal fade" id="modal_incident" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <form method="post" action="{{ route('incident.store') }}" enctype="multipart/form-data">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Incident Report</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{csrf_field()}}
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Incident Type</label>
+                            <select name="drpIncidentType" class="form-control select2" style="width: 100%;" required>
+                                <option selected disabled>Choose Incident Type</option>
+                                @foreach ($incident_type as $incident_types)
+                                    <option value="{{$incident_types->id}}">{{$incident_types->incident_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtDesc">Description</label>
+                            <input type="text" class="form-control" id="txtDesc" name="txtDesc" placeholder="Describe the incident" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtLocation">Location</label>
+                            <input type="text" class="form-control" id="txtLocation" name="txtLocation" placeholder="Enter incident area">
+                        </div>
+                        <div class="form-group d-none">
+                            <label for="txtLongitude">Longitude</label>
+                            <input type="text" class="form-control" id="txtLongitude" name="txtLongitude" placeholder="Enter email" readonly>
+                        </div>
+                        <div class="form-group d-none">
+                            <label for="txtLatitude">Latitude</label>
+                            <input type="text" class="form-control" id="txtLatitude" name="txtLatitude" placeholder="Enter email" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtDateTime">Date & Time:</label>
+                            <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
+                                <input type="text" name="txtDateTime" class="form-control datetimepicker-input" data-target="#reservationdatetime"/>
+                                <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="single-upload-img-show" id="img_incident" style="object-fit:contain"
+                            src="{{asset('/gallery/img/no-image1.jpg')}}" alt="Browse image" width="100%"
+                            height="250px" />
+                        <div class="input-group control-group increment">
+                            <input type="file" class="file-upload d-none" name="image" accept="image/*" capture
+                                onchange="readURL(this);" id="choose_image" required>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer justify-content-start">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+    <!-- <form method="POST" action="">
+        @csrf
+        <div class="row">
+            <div class="col-md-6">
+                <div id="my_camera"></div>
+                <br/>
+                <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                <input type="hidden" name="image" class="image-tag">
+            </div>
+            <div class="col-md-6">
+                <div id="results">Your captured image will appear here...</div>
+            </div>
+            <div class="col-md-12 text-center">
+                <br/>
+                <button class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </form> -->
+    <!-- d-block d-md-none d-lg-none d-xl-none -->
+    <div class="floatingButtonWrap">
+        <div class="floatingButtonInner">
+            <a href="#" class="floatingButton">
+                <i class="fa fa-plus icon-default"></i>
+            </a>
+            <ul class="floatingMenu d-none">
+                <li>
+                    <a href="#">Add Supplier</a>
+                </li>
+                <li>
+                    <a href="#">Add Table</a>
+                </li>
+                <li>
+                    <a href="#">Add Food</a>
+                </li>
+                <li>
+                    <a href="#">Add Menu Type</a>
+                </li>
+                <li>
+                    <a href="#">Add Menu</a>
+                </li>
+                <li>
+                    <a href="https://google.com" target="_blank">Go To Google</a>
+                </li>
+                <li>
+                    <a href="#">Add Inventory</a>
+                </li>
+                <li>
+                    <a href="#">Add Staff</a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <!-- /.row -->
 </div>
 @endsection
 
 @push('scripts')
 <script>
+// Webcam.set({
+//     width: 490,
+//     height: 350,
+//     image_format: 'jpeg',
+//     jpeg_quality: 90
+// });
+
+// Webcam.attach( '#my_camera' );
+
+// function take_snapshot() {
+//     Webcam.snap( function(data_uri) {
+//         $(".image-tag").val(data_uri);
+//         document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+//     } );
+// }
+
 // Note: This example requires that you consent to location sharing when
 // prompted by your browser. If you see the error "The Geolocation service
 // failed.", it means you probably did not give permission for the browser to
@@ -249,6 +482,8 @@ function initMap() {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
+                $('#txtLatitude').val(position.coords.latitude);
+                $('#txtLongitude').val(position.coords.longitude);
 
                 infoWindow.setPosition(pos);
                 //infoWindow.setContent('Location found.');
@@ -305,87 +540,75 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     //infoWindow.open(map);
 }
 </script>
-<!-- <script>
-      var customLabel = {
-        restaurant: {
-          label: 'R'
-        },
-        bar: {
-          label: 'B'
-        }
-      };
 
-        function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          center: new google.maps.LatLng(10.720321, 122.5621),
-          zoom: 12
-        });
-        var infoWindow = new google.maps.InfoWindow;
-
-          // Change this depending on the name of your PHP or XML file
-          downloadUrl('https://storage.googleapis.com/mapsdevsite/json/mapmarkers2.xml', function(data) {
-          //downloadUrl('http://localhost:8080/thesis/salon/map/markers.php', function(data) {
-            var xml = data.responseXML;
-            var markers = xml.documentElement.getElementsByTagName('marker');
-            Array.prototype.forEach.call(markers, function(markerElem) {
-              var id = markerElem.getAttribute('id');
-              var name = markerElem.getAttribute('name');
-              var address = markerElem.getAttribute('address');
-              var type = markerElem.getAttribute('type');
-              var point = new google.maps.LatLng(
-                  parseFloat(markerElem.getAttribute('lat')),
-                  parseFloat(markerElem.getAttribute('lng')));
-
-              var infowincontent = document.createElement('div');
-              var strong = document.createElement('strong');
-              strong.textContent = name
-              infowincontent.appendChild(strong);
-              infowincontent.appendChild(document.createElement('br'));
-
-              var text = document.createElement('text');
-              text.textContent = address
-              infowincontent.appendChild(text);
-              var icon = customLabel[type] || {};
-              var marker = new google.maps.Marker({
-                map: map,
-                position: point,
-                label: icon.label
-              });
-              marker.addListener('click', function() {
-                infoWindow.setContent(infowincontent);
-                infoWindow.open(map, marker);
-              });
-            });
-          });
-        }
-
-
-
-      function downloadUrl(url, callback) {
-        var request = window.ActiveXObject ?
-            new ActiveXObject('Microsoft.XMLHTTP') :
-            new XMLHttpRequest;
-
-        request.onreadystatechange = function() {
-          if (request.readyState == 4) {
-            request.onreadystatechange = doNothing;
-            callback(request, request.status);
-          }
-        };
-
-        request.open('GET', url, true);
-        request.send(null);
-      }
-
-      function doNothing() {}
-    </script> -->
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClxpzuEYmbt5qmjpkB348ouv2V-pL4TII&callback&libraries=visualization&callback=initMap">
 </script>
 <script>
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var getData = e.target.result.split(':')[0];
+            var getType = e.target.result.split(':')[1];
+            var typeResult = getType.split('/')[0];
+            if (typeResult === 'image') {
+                $('#img_incident').attr('src', e.target.result);
+            } else {}
+
+
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
 $(document).ready(function() {
+    //Date and time picker
+    $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
+    $('#img_incident').click(function(e) {
+        $('#choose_image').trigger('click');
+    });
+    $('.floatingButton').click(function() {
+        $('#modal_incident').modal('show');
+    });
+    // $('.floatingButton').on('click',
+    //     function(e) {
+    //         e.preventDefault();
+
+    //         $(this).toggleClass('open');
+    //         if ($(this).children('.fa').hasClass('fa-plus')) {
+    //             $(this).children('.fa').removeClass('fa-plus');
+    //             $(this).children('.fa').addClass('fa-close');
+    //         } else if ($(this).children('.fa').hasClass('fa-close')) {
+    //             $(this).children('.fa').removeClass('fa-close');
+    //             $(this).children('.fa').addClass('fa-plus');
+    //         }
+    //         $('.floatingMenu').stop().slideToggle();
+    //     }
+    // );
+    // $(this).on('click', function(e) {
+
+    //     var container = $(".floatingButton");
+    //     // if the target of the click isn't the container nor a descendant of the container
+    //     if (!container.is(e.target) && $('.floatingButtonWrap').has(e.target).length === 0) {
+    //         if (container.hasClass('open')) {
+    //             container.removeClass('open');
+    //         }
+    //         if (container.children('.fa').hasClass('fa-close')) {
+    //             container.children('.fa').removeClass('fa-close');
+    //             container.children('.fa').addClass('fa-plus');
+    //         }
+    //         $('.floatingMenu').hide();
+    //     }
+
+    //     // if the target of the click isn't the container and a descendant of the menu
+    //     if (!container.is(e.target) && ($('.floatingMenu').has(e.target).length > 0)) {
+    //         $('.floatingButton').removeClass('open');
+    //         $('.floatingMenu').stop().slideToggle();
+    //     }
+    // });
     // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
-    demo.initChartsPages();
+    // demo.initChartsPages();
 });
 </script>
 @endpush

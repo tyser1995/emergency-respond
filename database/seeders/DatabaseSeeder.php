@@ -19,5 +19,8 @@ class DatabaseSeeder extends Seeder
        
         //Department Type
         $this->call([DepartmentTypeSeeder::class]);
+
+        //Indcdent Type
+        $this->call([IncidentTypeTableSeeder::class]);
     }
 }
