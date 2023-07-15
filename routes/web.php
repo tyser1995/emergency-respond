@@ -34,6 +34,7 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('users', ['as' => 'users', 'uses' => 'App\Http\Controllers\UserController@index']);
     Route::get('users/delete/{id}', ['as' => 'users/delete/{id}', 'uses' => 'App\Http\Controllers\UserController@delete']);
+    Route::get('users/verify/{id}', ['as' => 'users/verify', 'uses' => 'App\Http\Controllers\UserController@verify_user']);
 	Route::resource('user', 'App\Http\Controllers\UserController');
 
     //Webcam

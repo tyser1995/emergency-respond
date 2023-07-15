@@ -63,6 +63,15 @@
                                         <td>{{ $user->role_name ? $user->role_name : '' }}</td>
                                         <td>{{ $user->created_at->format('M d, Y h:i a') }}</td>
                                         <td class="text-right">
+                                            @if ($user->email_verified_at)
+                                            <a style="pointer-events: none" class="{{Auth::user()->can('user-edit') ? 'btn btn-success btn-sm ' : 'btn btn-info btn-sm d-none'}}" title="Verified"><i class="fas fa-check-circle"></i></a>
+                                            @else
+                                            <button type="button" data-id="{{$user->id}}"
+                                                value="{{$user->name}}"
+                                                class="btnCanVerify {{Auth::user()->can('user-edit') ? 'btn btn-warning btn-sm' : 'btn btn-warning btn-sm d-none'}} " title="Click to verified"><i
+                                                    class="fas fa-exclamation-triangle"></i></button>
+                                                </button>
+                                            @endif
                                             <a href="{{ route('user.edit', $user) }}" class="{{Auth::user()->can('user-edit') ? 'btn btn-info btn-sm ' : 'btn btn-info btn-sm d-none'}}"><i class="fas fa-pen"></i></a>
                                             <button type="button" data-id="{{$user->id}}"
                                                 value="{{$user->name}}"
@@ -148,6 +157,29 @@ $(document).ready(function() {
                     window.location.href = base_url + "/users/delete/" + $(this).data('id');
                     Swal.fire({
                         title: $(this).val() + ' Deleted Successfully',
+                        icon: 'success',
+                        allowOutsideClick:false,
+                        confirmButtonText: 'Close',
+                    }).then(()=>{
+                        $('#tblUser').DataTable().ajax.reload();
+                    });
+                }
+            });
+        });
+
+        $('.btnCanVerify').click(function() {
+            Swal.fire({
+                // title: 'Error!',
+                text: 'Verify ' + $(this).val() + ' user?',
+                icon: 'question',
+                allowOutsideClick:false,
+                confirmButtonText: 'Yes',
+                showCancelButton: true,
+            }).then((result) => {
+                if (result.value) {
+                    window.location.href = base_url + "/users/verify/" + $(this).data('id');
+                    Swal.fire({
+                        title: $(this).val() + ' Verified Successfully',
                         icon: 'success',
                         allowOutsideClick:false,
                         confirmButtonText: 'Close',

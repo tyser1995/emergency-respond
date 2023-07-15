@@ -32,11 +32,18 @@ class UserController extends Controller
      */
     public function index(User $model)
     {
+        $user_acct = $model::findOrFail(Auth::user()->id);
+        // $user_role = array(1,2,10);
+        if($user_acct->role == 10){//LGU user
+
+        }
         $users = $model
             ->select('users.*', 'roles.id AS role_id', 'roles.name AS role_name')
             ->leftJoin('roles', 'users.role', '=', 'roles.id')
             ->paginate(15)
         ;
+
+
         return view('users.index', ['users' => $users]);
     }
 
@@ -165,5 +172,12 @@ class UserController extends Controller
         else{
             return redirect()->route('register')->withError(__('Password does not match'));
         }
+    }
+
+    public function verify_user($id){
+        $user = User::findOrfail($id);
+        $user->email_verified_at = now();
+        $user->update();
+        return redirect()->route('user.index')->withStatus('Verified Successfully ' .$user->name);
     }
 }
