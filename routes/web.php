@@ -44,6 +44,8 @@ Route::group(['middleware' => 'auth'], function () {
     // });
 
     //Incidents
+    Route::get('incidents',  ['as' => 'incidents', 'uses' => 'App\Http\Controllers\IncidentsController@index']);
+    Route::get('incidents/delete/{id}', ['as' => 'incidents/delete/{id}', 'uses' => 'App\Http\Controllers\IncidentsController@delete']);
     Route::resource('incident', 'App\Http\Controllers\IncidentsController');
 
     Route::get('incident_types',  ['as' => 'incident_types', 'uses' => 'App\Http\Controllers\IncidentTypesController@index']);

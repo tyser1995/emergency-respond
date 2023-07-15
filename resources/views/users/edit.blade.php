@@ -26,11 +26,6 @@
                             <div class="col-4 text-right edit-user-btn">
                                 <a href="{{ route('user.index') }}" class="btn btn-sm btn-primary" id="edit-user-btn">{{
                                     __('Back to list') }}</a>
-                                <div class="icon">
-                                    <a href="{{ route('user.index') }}" class="btn btn-sm btn-primary">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </a>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -94,7 +89,7 @@
                                         class="form-control form-control-alternative{{ $errors->has('password') ? ' is-invalid' : '' }}"
                                         placeholder="{{ __('Password') }}" value="">
                                     <div class="d-flex justify-content-end">
-                                        <div class="mx-3 view_password"
+                                        <div class="mx-3 view_password d-none"
                                             style="transform: translateY(-33px); width:23px;">
                                             <i id="visibilityBtnPassword">
                                                 <span id="iconPassword" class="material-symbols-outlined">
@@ -118,7 +113,7 @@
                                         placeholder="{{ __('Confirm Password') }}" value="">
                                 </div>
                                 <div class="d-flex justify-content-end">
-                                    <div class="mx-3 view_password" style="transform: translateY(-41px); width:23px;">
+                                    <div class="mx-3 view_password d-none" style="transform: translateY(-41px); width:23px;">
                                         <i id="visibilityBtnConfirmPassword">
                                             <span id="iconConfirmPassword" class="material-symbols-outlined" id="icon">
                                                 visibility

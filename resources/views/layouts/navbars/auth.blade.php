@@ -82,9 +82,10 @@
                       </ul>
                   </li>
                   @endif
-                  @if (Auth::user()->can('report_management-list'))
-                  <li class="nav-item">
-                      <a href="#" class="nav-link">
+                
+                  <li class="nav-item {{ $elementActive == 'user' || $elementActive == 'incidents' ? 'menu-open' : '' }}">
+                      <a href="#"
+                          class="nav-link {{ $elementActive == 'user' || $elementActive == 'incidents' ? 'active' : '' }}">
                           <i class="nav-icon fas fa-file"></i>
                           <p>
                               Report Management
@@ -93,7 +94,7 @@
                       </a>
                       <ul class="nav nav-treeview">
                           <li class="nav-item">
-                              <a href="#" class="nav-link">
+                              <a href="{{ route('incident.index') }}" class="nav-link {{ $elementActive == 'incidents' ? 'active' : '' }}">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>Incident</p>
                               </a>
@@ -106,8 +107,8 @@
                           </li> -->
                       </ul>
                   </li>
-                  @endif
-                  <li class="nav-item">
+                 
+                  <li class="nav-item d-none">
                       <a href="#" class="nav-link">
                           <i class="nav-icon fas fa-briefcase-medical"></i>
                           <p>
@@ -124,7 +125,7 @@
                           </li>
                       </ul>
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item d-none">
                       <a href="#" class="nav-link">
                           <i class="nav-icon fas fa-people-carry"></i>
                           <p>

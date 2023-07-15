@@ -1,6 +1,6 @@
 @extends('layouts.app', [
 'class' => '',
-'elementActive' => 'department_types'
+'elementActive' => 'incidents'
 ])
 
 @section('content')
@@ -12,19 +12,14 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0 h3_title"></h3>
+                                <h3 class="mb-0 h3_title">{{__('List of Incidents')}}</h3>
                             </div>
-                            @can('deparment_type-create')
+                            <!-- @can('deparment_type-create')
                                 <div class="col-4 text-right add-region-btn">
                                     <a href="{{ route('department_type.create') }}" class="btn btn-sm btn-primary"
                                         id="add-region-btn">{{ __('Add Department Type') }}</a>
-                                    <div class="input-group-append icon">
-                                        <a href="{{ route('department_type.create') }}" class="btn btn-sm btn-primary">
-                                            <i class="fa fa-plus-square"></i>
-                                        </a>
-                                    </div>
                                 </div>
-                            @endcan
+                            @endcan -->
                         </div>
                     </div>
 
@@ -35,20 +30,24 @@
                             <thead>
                                 <tr>
                                     <th class="d-none">ID</th>
-                                    <th>Department Type</th>
-                                    <th>Created date</th>
+                                    <th>Incident</th>
+                                    <th>Description</th>
+                                    <th>Location</th>
+                                    <th>Date & Time</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($department_type as $department_types)
+                                @foreach ($incident as $incidents)
                                     <tr>
-                                        <td class="d-none">{{$department_types->id}}</td>
-                                        <td>{{$department_types->department_type}}</td>
-                                        <td>{{$department_types->created_at}}</td>
+                                        <td class="d-none">{{$incidents->id}}</td>
+                                        <td>{{$incidents->incident_name}}</td>
+                                        <td>{{$incidents->description}}</td>
+                                        <td>{{$incidents->location}}</td>
+                                        <td>{{$incidents->datetime_incident}}</td>
                                         <td class="text-center">
-                                        <a href="{{route('department_type.edit', $department_types->id)}}" class="{{Auth::user()->can('department_type-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-pencil"></i></a>
-                                        <button type="button" data-id="{{$department_types->id}}" value="{{$department_types->department_type}}" class="btnCanDestroy {{Auth::user()->can('department_type-delete') ? 'btn btn-danger btn-sm' : 'btn btn-danger btn-sm d-none'}} "><i class="fa fa-remove"></i></button>
+                                        <!-- <a href="{{route('incident.edit', $incidents->id)}}" class="{{Auth::user()->can('incident-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-pen"></i></a> -->
+                                        <button type="button" data-id="{{$incidents->id}}" value="{{$incidents->incident_name}}" class="btnCanDestroy {{Auth::user()->can('incident-delete') ? 'btn btn-danger btn-sm' : 'btn btn-danger btn-sm d-none'}} "><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -62,7 +61,6 @@
 </div>
 @endsection
 
-@include('department_types.script')
 @push('scripts')
 <script>
     $(document).ready(function () {
@@ -72,14 +70,14 @@
         $('.btnCanDestroy').click(function() {
             Swal.fire({
                 // title: 'Error!',
-                text: 'Do you want to remove ' + $(this).val() + ' department?',
+                text: 'Do you want to remove ' + $(this).val() + ' incident?',
                 icon: 'question',
                 allowOutsideClick:false,
                 confirmButtonText: 'Yes',
                 showCancelButton: true,
             }).then((result) => {
                 if (result.value) {
-                    window.location.href = base_url + "/department_types/delete/" + $(this).data('id');
+                    window.location.href = base_url + "/incidents/delete/" + $(this).data('id');
                     Swal.fire({
                         title: $(this).val() + ' Deleted Successfully',
                         icon: 'success',

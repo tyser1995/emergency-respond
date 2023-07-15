@@ -203,7 +203,7 @@ body {
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('incident.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 <div class="small-box-footer">
                     <?php 
                                 $count = \App\Models\Incident::get()->last();
@@ -315,7 +315,7 @@ body {
 
     <div class="modal fade" id="modal_incident" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
-            <form method="post" action="{{ route('incident.store') }}" enctype="multipart/form-data">
+            <form method="post" action="{{ route('incident.store') }}" enctype="multipart/form-data" novalidate>
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Incident Report</h4>
@@ -364,7 +364,7 @@ body {
                             height="250px" />
                         <div class="input-group control-group increment">
                             <input type="file" class="file-upload d-none" name="image" accept="image/*" capture
-                                onchange="readURL(this);" id="choose_image" required>
+                                onchange="readURL(this);" id="choose_image">
                         </div>
 
                     </div>
@@ -545,7 +545,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 </script>
 
 <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClxpzuEYmbt5qmjpkB348ouv2V-pL4TII&callback&libraries=visualization&callback=initMap">
+    src="{{asset('js')}}/gmap.js">
 </script>
 <script>
 function readURL(input) {
@@ -566,6 +566,7 @@ function readURL(input) {
 }
 
 $(document).ready(function() {
+    console.log(process.env('GOOGLE_MAPS_API_KEY'));
     //Date and time picker
     $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
     $('#img_incident').click(function(e) {

@@ -10,8 +10,10 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image as Image;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Incident;
+use App\Models\IncidentType;
 
 use Carbon\Carbon;
 class IncidentsController extends Controller
@@ -24,6 +26,15 @@ class IncidentsController extends Controller
     public function index()
     {
         //
+        $incident = Incident::join('incident_types','incident_types.id','=','incidents.incident_type_id')
+        ->where('incidents.deleted_flag',0)
+        ->orderBy('incidents.created_at','DESC')
+        ->select('incidents.*','incident_types.incident_name')
+        ->get();
+
+        return view('incidents.index',[
+            'incident' => $incident
+        ]);
     }
 
     /**
@@ -45,6 +56,7 @@ class IncidentsController extends Controller
     public function store(Request $request)
     {
         //
+        $incident_type = IncidentType::findOrFail($request->drpIncidentType);
         $incident = new Incident;
         if($request->hasFile('image')){
             $image = $request->file('image');
@@ -52,10 +64,18 @@ class IncidentsController extends Controller
             //
             $input['image'] = $image_name;
 
-            $destination_path = public_path().'/images/incidents_img/';
-            // if(!File::exists($destination_path)){
-            //     File::makeDirectory($destination_path,0777,true);
-            // }
+            $destination_path = "";
+            if(env('APP_ENV') == "local")
+                $destination_path = public_path().'/images/incidents_img/'.$incident_type->incident_name;
+            else
+                $destination_path = base_path().'/public/images/incidents_img/'.$incident_type->incident_name;
+            
+            //$destination_path = base_path().'/blogf/storage/app/public/images/';
+            //
+            
+             if(!File::exists($destination_path)){
+                 File::makeDirectory($destination_path,0777,true);
+             }
 
             //Storage::put($destination_path, $image_name);
             $request->file('image')->move($destination_path,  Carbon::now().'-'.$request->drpIncidentType.'-'.$image_name);
@@ -117,5 +137,12 @@ class IncidentsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete($id){
+        $incident_types = Incident::findOrfail($id);
+        $incident_types->deleted_flag = 1;
+        $incident_types->update();
+        return redirect()->route('incident.index')->withError('Deleted Successfully');
     }
 }

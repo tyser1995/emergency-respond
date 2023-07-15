@@ -94,3 +94,9 @@
 </div>
 <!-- /.login-box -->
 @endsection
+
+@push('scripts')
+    <script>
+        console.log("{{base_path().'/../'.env('PUBLIC_PATH')}}");
+    </script>
+@endpush
