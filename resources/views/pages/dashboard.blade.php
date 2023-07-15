@@ -46,7 +46,7 @@ body {
 
 body {
     width: 100vw;
-    height: 100vh;
+    height: 100vh !important;
     background: #fafbff;
 }
 
@@ -172,8 +172,8 @@ body {
                     <p>Total User</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-bag"></i>
-                </div>
+                <i class="fas fa-users"></i>
+              </div>
                 <a href="{{ route('users') }}" class="small-box-footer">More info <i
                         class="fas fa-arrow-circle-right"></i></a>
                 <div class="small-box-footer">
@@ -194,19 +194,22 @@ body {
             <div class="small-box bg-success">
                 <div class="inner">
                 <h3><?php 
-                                            $count = \App\Models\Incident::all();
+                                            $count = \App\Models\User::where('role','=',9)
+                                            ->get();
                                             echo count($count);
                                         ?></h3>
 
-                    <p>Total Incident</p>
+                    <p>Total GBI</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
+                    <i class="fas fa-user-friends"></i>
                 </div>
-                <a href="{{ route('incident.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 <div class="small-box-footer">
                     <?php 
-                                $count = \App\Models\Incident::get()->last();
+                                $count = \App\Models\User::where('role','=',9)
+                                ->get()
+                                ->last();
                             ?>
                     @if (!empty($count))
                     <i class="fa fa-refresh"></i> Update Since {{$count->created_at->diffForHumans()}}
@@ -229,10 +232,10 @@ body {
                                         ?></h3>
                     </h3>
 
-                    <p>Local Resident</p>
+                    <p>Total Local Resident</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-person-add"></i>
+                    <i class="fas fa-user"></i>
                 </div>
                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 <div class="small-box-footer">
@@ -262,10 +265,10 @@ body {
                                         ?>
                     </h3>
 
-                    <p>NGO Member</p>
+                    <p>Total NGO Member</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
+                    <i class="fas fa-user-nurse"></i>
                 </div>
                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 <div class="small-box-footer">
@@ -283,6 +286,104 @@ body {
             </div>
         </div>
         <!-- ./col -->
+    </div>
+   <?php
+    $user_role = \App\Models\User::findOrFail(Auth::user()->id);
+   ?>
+    <div class="row <?= $user_role->role == 10 ? 'd-none' : '' ?>">
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3><?php 
+                                            $count = \App\Models\Incident::where('status','Active')
+                                            ->get();
+                                            echo count($count);
+                                        ?></h3>
+
+                    <p>Active Incidents</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-bed"></i>
+                </div>
+                <a href="{{ route('incident.index') }}" class="small-box-footer">More info <i
+                        class="fas fa-arrow-circle-right"></i></a>
+                <div class="small-box-footer">
+                    <?php 
+                                $count = \App\Models\Incident::where('status','Active')
+                                ->get()
+                                ->last();
+                            ?>
+                    @if (!empty($count))
+                    <i class="fa fa-refresh"></i> Update Since {{$count->created_at->diffForHumans()}}
+                    @else
+                    {{__('No Records found')}}
+                    @endif
+                </div>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                <h3><?php 
+                                            $count = \App\Models\Incident::where('status','Resolved')
+                                            ->get();
+                                            echo count($count);
+                                        ?></h3>
+
+                    <p>Resolved Incidents</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <a href="{{ route('incident.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <div class="small-box-footer">
+                    <?php 
+                                $count = \App\Models\Incident::where('status','Resolved')
+                                ->get()
+                                ->last();
+                            ?>
+                    @if (!empty($count))
+                    <i class="fa fa-refresh"></i> Update Since {{$count->created_at->diffForHumans()}}
+                    @else
+                    {{__('No Records found')}}
+                    @endif
+                </div>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>
+                    <?php 
+                                            $count = \App\Models\Incident::all();
+                                            echo count($count);
+                                        ?></h3>
+                    </h3>
+
+                    <p>Total Incidents</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-procedures"></i>
+                </div>
+                <a href="{{ route('incident.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <div class="small-box-footer">
+                    <?php 
+                                $count = \App\Models\Incident::get()
+                                ->last();
+                            ?>
+                    @if (!empty($count))
+                    <i class="fa fa-refresh"></i> Update Since {{ $count->created_at->diffForHumans() }}
+                    @else
+                    {{__('No Records found')}}
+                    @endif
+                </div>
+            </div>
+        </div>
     </div>
     <!-- Map card -->
     <div class="card bg-gradient-primary">
@@ -331,7 +432,7 @@ body {
 
     <div class="modal fade" id="modal_incident" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
-            <form method="post" action="{{ route('incident.store') }}" enctype="multipart/form-data" novalidate>
+            <form id="frmIncident" method="post" action="{{ route('incident.store') }}" enctype="multipart/form-data" novalidate>
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Incident Report</h4>
@@ -385,8 +486,11 @@ body {
 
                     </div>
                     <div class="modal-footer justify-content-start">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button id="btnCancel" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="btnSubmit" type="submit" class="btn btn-primary">Submit</button>
+                        <button id="btnSpin" type="button" class="btn btn-primary d-none">
+                        <i class="fas fa-sync fa-spin"></i>
+                        </button>
                     </div>
                 </div>
             </form>
@@ -599,6 +703,12 @@ function readURL(input) {
 }
 
 $(document).ready(function() {
+    $('#frmIncident').submit(function (e) { 
+        $('#btnSubmit').css('pointer-events: none');
+        $('#btnSubmit').addClass('d-none');
+        $('#btnSpin').removeClass('d-none');
+        $('#btnCancel').class('d-none');
+    });
     //Date and time picker
     $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
     $('#img_incident').click(function(e) {

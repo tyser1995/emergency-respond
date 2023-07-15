@@ -77,8 +77,19 @@ class IncidentsController extends Controller
                  File::makeDirectory($destination_path,0777,true);
              }
 
+             if(!file_exists($destination_path)){
+                File::makeDirectory($destination_path,0755,true);
+            }
+
             //Storage::put($destination_path, $image_name);
-            $request->file('image')->move($destination_path,  Carbon::now().'-'.$request->drpIncidentType.'-'.$image_name);
+            if(isset($image)){
+                $imgFileOrig = Image::make($image)->save($destination_path.'/'.str_replace(":","-",Carbon::now()).'-'.$request->drpIncidentType.'-'.$image_name);
+                // $imgFile = Image::make($image)->resize(450, null, function($constraint){
+                //     $constraint->aspectRatio();
+                // })->save($destination_path.'/'.str_replace(":","-",Carbon::now()).'-'.$request->drpIncidentType.'-'.$image_name);
+            }
+           
+            // $request->file('image')->move($destination_path,  str_replace(":","-",Carbon::now()).'-'.$request->drpIncidentType.'-'.$image_name);
             $incident->incident_type_id = $request->drpIncidentType;
             $incident->created_by_users_id = Auth::user()->id;
             $incident->location = $request->txtLocation;
@@ -89,7 +100,7 @@ class IncidentsController extends Controller
             $incident->datetime_incident = $request->txtDateTime;
             $incident->save();
 
-            return redirect()->back();
+            return redirect()->route('dashboard');
         }
 
     }
