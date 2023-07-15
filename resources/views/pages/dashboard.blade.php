@@ -566,7 +566,6 @@ function readURL(input) {
 }
 
 $(document).ready(function() {
-    console.log(process.env('GOOGLE_MAPS_API_KEY'));
     //Date and time picker
     $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
     $('#img_incident').click(function(e) {
