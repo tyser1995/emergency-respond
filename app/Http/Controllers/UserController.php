@@ -158,6 +158,7 @@ class UserController extends Controller
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
                 'password' => Hash::make($request->input('password')),
+                'role' => 10,
             ]);
             return redirect()->route('login')->withStatus(__('User successfully created.'));
         }

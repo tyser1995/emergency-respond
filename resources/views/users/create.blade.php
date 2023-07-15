@@ -26,11 +26,6 @@
                             <div class="col text-right add-user">
                                 <a href="{{ route('user.index') }}" class="btn btn-sm btn-primary" id="add-user">{{
                                     __('Back to list') }}</a>
-                                <div class="icon">
-                                    <a href="{{ route('user.index') }}" class="btn btn-sm btn-primary">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </a>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -91,7 +86,7 @@
                                     <input type="password" name="password" id="input-password"
                                         class="input-password form-control form-control-alternative{{ $errors->has('password') ? ' is-invalid' : '' }}"
                                         placeholder="{{ __('Password') }}" value="" required>
-                                    <div class="d-flex justify-content-end">
+                                    <!-- <div class="d-flex justify-content-end">
                                         <div class="mx-3 view_password"
                                             style="transform: translateY(-33px); width:23px;">
                                             <i id="visibilityBtnPassword">
@@ -100,7 +95,7 @@
                                                 </span>
                                             </i>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">
@@ -114,7 +109,7 @@
                                     <input type="password" name="password_confirmation" id="input-password-confirmation"
                                         class="input-password-confirmation form-control form-control-alternative"
                                         placeholder="{{ __('Confirm Password') }}" value="" required>
-                                    <div class="d-flex justify-content-end">
+                                    <!-- <div class="d-flex justify-content-end d-none">
                                         <div class="mx-3 view_password"
                                             style="transform: translateY(-33px); width:23px;">
                                             <i id="visibilityBtnConfirmPassword">
@@ -123,7 +118,7 @@
                                                 </span>
                                             </i>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                                 <div class="form-group{{ $errors->has('status') ? ' has-danger' : '' }}">

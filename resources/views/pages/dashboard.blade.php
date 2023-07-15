@@ -221,7 +221,13 @@ body {
             <!-- small box -->
             <div class="small-box bg-warning">
                 <div class="inner">
-                    <h3>0</h3>
+                    <h3>
+                    <?php 
+                                            $count = \App\Models\User::where('role','=',10)
+                                            ->get();
+                                            echo count($count);
+                                        ?></h3>
+                    </h3>
 
                     <p>Local Resident</p>
                 </div>
@@ -231,10 +237,12 @@ body {
                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 <div class="small-box-footer">
                     <?php 
-                                $count = \App\Models\User::get()->last();
+                                $count = \App\Models\User::where('role','=',10)
+                                ->get()
+                                ->last();
                             ?>
-                    @if (!!empty($count))
-                    <i class="fa fa-refresh"></i> Update Since {{$count->created_at->diffForHumans()}}
+                    @if (!empty($count))
+                    <i class="fa fa-refresh"></i> Update Since {{ $count->created_at->diffForHumans() }}
                     @else
                     {{__('No Records found')}}
                     @endif
@@ -246,7 +254,13 @@ body {
             <!-- small box -->
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>0</h3>
+                    <h3>
+                    <?php 
+                                            $count = \App\Models\User::where('role','=',8)
+                                            ->get();
+                                            echo count($count);
+                                        ?>
+                    </h3>
 
                     <p>NGO Member</p>
                 </div>
@@ -255,10 +269,12 @@ body {
                 </div>
                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 <div class="small-box-footer">
-                    <?php 
-                                $count = \App\Models\User::get()->last();
+                <?php 
+                                $count = \App\Models\User::where('role','=',8)
+                                ->get()
+                                ->last();
                             ?>
-                    @if (!!empty($count))
+                    @if (!empty($count))
                     <i class="fa fa-refresh"></i> Update Since {{$count->created_at->diffForHumans()}}
                     @else
                     {{__('No Records found')}}
@@ -468,12 +484,13 @@ let labelIndex = 0;
 // }, 5000);
 
 function initMap() {
+    var bounds = new google.maps.LatLngBounds();
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {
-            lat: -34.397,
-            lng: 150.644
-        },
-        zoom: 12
+        // center: {
+        //     lat: -34.397,
+        //     lng: 150.644
+        // },
+        //zoom: 12
     });
     infoWindow = new google.maps.InfoWindow;
 
@@ -487,10 +504,10 @@ function initMap() {
                 };
                 $('#txtLatitude').val(position.coords.latitude);
                 $('#txtLongitude').val(position.coords.longitude);
+                bounds.extend(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
 
                 infoWindow.setPosition(pos);
                 //infoWindow.setContent('Location found.');
-                console.log(infoWindow.position);
                 //infoWindow.open(map);
 
                 var marker = new google.maps.Marker({
@@ -513,6 +530,22 @@ function initMap() {
                 handleLocationError(true, infoWindow, map.getCenter());
             });
         }, 2000);
+
+        google.maps.event.addListener(map, "bounds_changed", function() {
+            // send the new bounds back to your server
+                //console.log("map bounds{"+map.getBounds());
+                //this.setZoom(map.getZoom()-1);
+
+                // if (this.getZoom() > 15) {
+                //     this.setZoom(15);
+                // }
+            });
+
+        //center the map to the geometric center of all markers
+        //map.setCenter(bounds.getCenter());
+        //map.fitBounds(bounds);
+        //remove one zoom level to ensure no marker is on the edge.
+        map.setZoom(12); 
     } else {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());

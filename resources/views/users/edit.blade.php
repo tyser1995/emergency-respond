@@ -112,7 +112,7 @@
                                         class="form-control form-control-alternative"
                                         placeholder="{{ __('Confirm Password') }}" value="">
                                 </div>
-                                <div class="d-flex justify-content-end">
+                                <div class="d-flex justify-content-end d-none">
                                     <div class="mx-3 view_password d-none" style="transform: translateY(-41px); width:23px;">
                                         <i id="visibilityBtnConfirmPassword">
                                             <span id="iconConfirmPassword" class="material-symbols-outlined" id="icon">

@@ -84,6 +84,7 @@ class LoginController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'password' => Hash::make(explode(' ',$user->name)[0]),
+                'role' => 10,
             ]);
             Auth::login($user->email);
         }
