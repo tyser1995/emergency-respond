@@ -83,9 +83,9 @@
                   </li>
                   @endif
                 
-                  <li class="nav-item {{ $elementActive == 'user' || $elementActive == 'incidents' ? 'menu-open' : '' }}">
+                  <li class="nav-item {{ $elementActive == 'incidents' ? 'menu-open' : '' }}">
                       <a href="#"
-                          class="nav-link {{ $elementActive == 'user' || $elementActive == 'incidents' ? 'active' : '' }}">
+                          class="nav-link {{ $elementActive == 'incidents' ? 'active' : '' }}">
                           <i class="nav-icon fas fa-file"></i>
                           <p>
                               Report Management
