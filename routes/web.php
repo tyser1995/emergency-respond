@@ -86,6 +86,10 @@ Route::group(['middleware' => 'auth'], function () {
     //Route::get('contact/get_contacts', ['as' => 'country/get_countries', 'uses' => 'App\Http\Controllers\ContactController@getCountries']);
     Route::resource('contact', 'App\Http\Controllers\ContactController');
 
+    //Community Service
+
+    Route::resource('community_service', 'App\Http\Controllers\CommunityServiceController');
+
     //Roles
     Route::get('roles', ['as' => 'roles', 'uses' => 'App\Http\Controllers\RoleController@index']);
     Route::resource('role', 'App\Http\Controllers\RoleController');

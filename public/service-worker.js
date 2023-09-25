@@ -14,6 +14,8 @@ const filesToCache = [
     '/offline.html'
 ];
 
+// importScripts("https://js.pusher.com/beams/service-worker.js");
+
 const checkResponse = function (request) {
     return new Promise(function (fulfill, reject) {
         fetch(request).then(function (response) {

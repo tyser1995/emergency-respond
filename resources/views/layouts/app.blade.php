@@ -75,6 +75,23 @@ The above copyright notice and this permission notice shall be included in all c
     }
     </style>
 
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('72fc0194dfb1f91c650a', {
+        cluster: 'us2'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+        alert(JSON.stringify(data));
+        });
+    </script>
+
+    {{-- <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 </head>
 
@@ -91,10 +108,10 @@ The above copyright notice and this permission notice shall be included in all c
     <script>
     var base_url = "{{ url('/') }}";
     </script>
-    <script src="{{ asset('/sw.js') }}"></script>
+    <script src="{{ asset('/service-worker.js') }}"></script>
     <script>
     if (!navigator.serviceWorker.controller) {
-        navigator.serviceWorker.register("/sw.js").then(function(reg) {
+        navigator.serviceWorker.register("/service-worker.js").then(function(reg) {
             console.log("Service worker has been registered for scope: " + reg.scope);
         });
     }
@@ -185,6 +202,16 @@ The above copyright notice and this permission notice shall be included in all c
         $('div.alert').delay(3000).slideUp(300);
     })
     </script>
+    <script>
+        const beamsClient = new PusherPushNotifications.Client({
+          instanceId: '66abf6c4-8600-4421-ad14-648cf8670345',
+        });
+
+        beamsClient.start()
+          .then(() => beamsClient.addDeviceInterest('hello'))
+          .then(() => console.log('Successfully registered and subscribed!'))
+          .catch(console.error);
+      </script>
     @stack('scripts')
 
     @include('layouts.navbars.fixed-plugin-js')

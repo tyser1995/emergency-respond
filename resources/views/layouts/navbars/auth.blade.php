@@ -1,5 +1,5 @@
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4 d-sm-none d-md-block d-lg-block d-xl-block">
       <!-- Brand Logo -->
       <a href="#" class="brand-link">
           <img src="{{ asset('images')}}/logo/gbi.png " alt="GBI Cares"
@@ -12,11 +12,12 @@
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
               <div class="image">
-                  <img src="{{ asset('images')}}/logo/gbi.png " class="img-circle elevation-2"
-                      alt="User Image">
+                <i class="fa fa-user-alt img-circle elevation-2"></i>
+                  {{-- <img src="{{ asset('images')}}/logo/gbi.png " class="img-circle elevation-2"
+                      alt="User Image"> --}}
               </div>
               <div class="info">
-                  <a href="#" class="d-block"><?php 
+                  <a href="#" class="d-block"><?php
                                     echo Auth::user()->name;
                                 ?></a>
               </div>
@@ -82,10 +83,10 @@
                       </ul>
                   </li>
                   @endif
-                
-                  <li class="nav-item {{ $elementActive == 'incidents' ? 'menu-open' : '' }}">
+
+                  <li class="nav-item {{ $elementActive == 'incidents' || $elementActive == 'community_service' ? 'menu-open' : '' }}">
                       <a href="#"
-                          class="nav-link {{ $elementActive == 'incidents' ? 'active' : '' }}">
+                          class="nav-link {{ $elementActive == 'incidents' || $elementActive == 'community_service' ? 'active' : '' }}">
                           <i class="nav-icon fas fa-file"></i>
                           <p>
                               Report Management
@@ -99,6 +100,12 @@
                                   <p>Incident</p>
                               </a>
                           </li>
+                          <li class="nav-item">
+                            <a href="{{ route('community_service.index') }}" class="nav-link {{ $elementActive == 'community_service' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Community Service</p>
+                            </a>
+                        </li>
                           <!-- <li class="nav-item">
                               <a href="./index2.html" class="nav-link active">
                                   <i class="far fa-circle nav-icon"></i>
@@ -107,7 +114,7 @@
                           </li> -->
                       </ul>
                   </li>
-                 
+
                   <li class="nav-item d-none">
                       <a href="#" class="nav-link">
                           <i class="nav-icon fas fa-briefcase-medical"></i>

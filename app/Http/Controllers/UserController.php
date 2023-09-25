@@ -5,17 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\Intl\Currencies;
 use App\Helpers\GlobalHelper;
 use Spatie\Permission\Models\Role;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image as Image;
+
 use DB;
 
 class UserController extends Controller
-{   
-    
+{
+
     public function __construct()
     {
         $this->middleware('permission:user-list', ['only' => ['index']]);
@@ -99,7 +104,7 @@ class UserController extends Controller
                 $user->name           = ucfirst($request->input('name'));
                 $user->status         = $request->input('status');
                 $user->role           = $request->input('role');
-                
+
 
                 $oldp = $user->password;
 
@@ -118,9 +123,9 @@ class UserController extends Controller
 
                 $role = Role::where('id', $request->input('role'))->first();
                 $user->assignRole($role);
-                
-                return redirect()->route('user.index')->withStatus(__('User successfully updated.'));             
-                
+
+                return redirect()->route('user.index')->withStatus(__('User successfully updated.'));
+
             }
         }
 
@@ -129,11 +134,11 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        if($user) {   
+        if($user) {
             $user->delete();
-            return redirect()->route('user.index')->withStatus(__('User deleted'));  
+            return redirect()->route('user.index')->withStatus(__('User deleted'));
         }
-        return redirect()->route('user.index')->withError(__('Unable to delete'));  
+        return redirect()->route('user.index')->withError(__('Unable to delete'));
     }
 
     public function update_currency(Request $request)
@@ -144,9 +149,9 @@ class UserController extends Controller
             $user->save();
 
             $symbol = Currencies::getSymbol($request->input('currency'));
-            $result = ['is_success' => 1, 'currency_symbol' => $symbol]; 
+            $result = ['is_success' => 1, 'currency_symbol' => $symbol];
         }else{
-            $result = ['is_success' => 0]; 
+            $result = ['is_success' => 0];
         }
         return response()->json($result);
     }
@@ -160,18 +165,64 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-        if($request->input('password') == $request->input('confirm_password')){
-            User::create([
-                'name' => $request->input('name'),
-                'email' => $request->input('email'),
-                'password' => Hash::make($request->input('password')),
-                'role' => 10,
-            ]);
-            return redirect()->route('login')->withStatus(__('User successfully created.'));
+        if($request->hasFile('image')){
+            if($request->input('password') == $request->input('confirm_password')){
+                $image = $request->file('image');
+                $image_name = $image->getClientOriginalName();
+                //
+
+                $input['image'] = $image_name;
+
+                $destination_path = "";
+
+                if(env('APP_ENV') == "local")
+                    $destination_path = public_path().'/profile_photo/';
+                else{
+                    $destination_path = base_path().'/public/profile_photo/';
+                }
+
+
+                //godaddy public_path/public/images
+                //$destination_path = base_path().'/../public/images/incidents_img';
+                //
+
+                 if(!File::exists($destination_path)){
+                     File::makeDirectory($destination_path,0777,true);
+                 }
+
+                 if(!file_exists($destination_path)){
+                    File::makeDirectory($destination_path,0755,true);
+                }
+
+                if(isset($image)){
+                    $imgFileOrig = Image::make($image)->save($destination_path.'/'.$request->input('email').'-'.$image_name);
+                }
+
+                $check_user = User::where('email','=',$request->input('email'))
+                ->get()
+                ->first();
+
+                if(!$check_user){
+                    $user = new User;
+                    $user->name = $request->input('name');
+                    $user->email = $request->input('email');
+                    $user->password = Hash::make($request->input('password'));
+                    $user->profile_photo = $request->input('email').'-'.$image_name;
+                    $user->role = 10;
+                    $user->save();
+
+                    return redirect()->route('login')->withStatus(__('User successfully created.'));
+                }
+
+                return redirect()->route('register')->withError(__('Email already exists.'));
+            }
+            else{
+                return redirect()->route('register')->withError(__('Password does not match'));
+            }
+        }else{
+            return redirect()->route('register')->withError(__('Image not found'));
         }
-        else{
-            return redirect()->route('register')->withError(__('Password does not match'));
-        }
+
     }
 
     public function verify_user($id){

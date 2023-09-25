@@ -43,7 +43,7 @@
     <link rel="stylesheet" href="{{ asset('adminlte') }}/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('adminlte') }}/plugins/toastr/toastr.min.css">
-
+    {{-- <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script> --}}
 </head>
 
 <body class="hold-transition login-page">
@@ -103,10 +103,10 @@
     })
     </script>
 
-    <script src="{{ asset('/sw.js') }}"></script>
+    <script src="{{ asset('/service-worker.js') }}"></script>
     <script>
     if (!navigator.serviceWorker.controller) {
-        navigator.serviceWorker.register("/sw.js").then(function(reg) {
+        navigator.serviceWorker.register("/service-worker.js").then(function(reg) {
             console.log("Service worker has been registered for scope: " + reg.scope);
         });
     }

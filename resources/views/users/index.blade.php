@@ -48,6 +48,7 @@
                                         <th scope="col">{{ __('Name') }}</th>
                                         <th scope="col">{{ __('Email') }}</th>
                                         <th scope="col">{{ __('Role') }}</th>
+                                        <th scope="col">{{ __('Image ID') }}</th>
                                         <th scope="col">{{ __('Creation Date') }}</th>
                                         <th scope="col"></th>
                                     </tr>
@@ -61,6 +62,12 @@
                                             <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
                                         </td>
                                         <td>{{ $user->role_name ? $user->role_name : '' }}</td>
+                                        @if ($user->profile_photo)
+                                        <td><img src="{{ asset('profile_photo/' . $user->profile_photo) }}" style="width:50px; height:50px; border-radius: 50%;" /></td>
+                                        @else
+                                        <td></td>
+                                        @endif
+
                                         <td>{{ $user->created_at->format('M d, Y h:i a') }}</td>
                                         <td class="text-right">
                                             @if ($user->email_verified_at)

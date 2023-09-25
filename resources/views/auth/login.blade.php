@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <input type="email" name="email" value="{{ old('email') }}" required autofocus class="form-control" placeholder="{{ __('Email') }}">
-                   
+
                 </div>
                 <div class="input-group mb-3">
                 <div class="input-group-append">
@@ -52,7 +52,7 @@
                     </div>
                     <input type="password" name="password"
                                 placeholder="{{ __('Password') }}" type="password" required class="form-control">
-                    
+
                 </div>
                 <div class="row">
                     <div class="col-8">
@@ -76,7 +76,7 @@
                     <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
                 </a>
                 <a href="{{ route('google.redirect') }}" class="btn btn-block btn-danger">
-                    <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                    <i class="fab fa-google-plus mr-2"></i> Login with Google
                 </a>
             </div>
             <!-- /.social-auth-links -->

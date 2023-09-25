@@ -10,9 +10,9 @@
        * Copyright 2019 Google LLC. All Rights Reserved.
        * SPDX-License-Identifier: Apache-2.0
        */
-/** 
+/**
        * Always set the map height explicitly to define the size of the div element
-       * that contains the map. 
+       * that contains the map.
        */
 #map {
     height: 100%;
@@ -157,13 +157,14 @@ body {
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+        <!-- /.card -->
     <!-- Small boxes (Stat box) -->
-    <div class="row">
+    <div class="row d-sm-none d-md-flex d-lg-flex d-xl-flex">
         <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3><?php 
+                    <h3><?php
                                             $count = \App\Models\User::all();
                                             echo count($count);
                                         ?></h3>
@@ -176,7 +177,7 @@ body {
                 <a href="{{ route('users') }}" class="small-box-footer">More info <i
                         class="fas fa-arrow-circle-right"></i></a>
                 <div class="small-box-footer">
-                    <?php 
+                    <?php
                                 $count = \App\Models\User::get()->last();
                             ?>
                     @if (!empty($count))
@@ -192,7 +193,7 @@ body {
             <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
-                <h3><?php 
+                <h3><?php
                                             $count = \App\Models\User::where('role','=',9)
                                             ->get();
                                             echo count($count);
@@ -205,7 +206,7 @@ body {
                 </div>
                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 <div class="small-box-footer">
-                    <?php 
+                    <?php
                                 $count = \App\Models\User::where('role','=',9)
                                 ->get()
                                 ->last();
@@ -224,7 +225,7 @@ body {
             <div class="small-box bg-warning">
                 <div class="inner">
                     <h3>
-                    <?php 
+                    <?php
                                             $count = \App\Models\User::where('role','=',10)
                                             ->get();
                                             echo count($count);
@@ -238,7 +239,7 @@ body {
                 </div>
                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 <div class="small-box-footer">
-                    <?php 
+                    <?php
                                 $count = \App\Models\User::where('role','=',10)
                                 ->get()
                                 ->last();
@@ -257,7 +258,7 @@ body {
             <div class="small-box bg-danger">
                 <div class="inner">
                     <h3>
-                    <?php 
+                    <?php
                                             $count = \App\Models\User::where('role','=',8)
                                             ->get();
                                             echo count($count);
@@ -271,7 +272,7 @@ body {
                 </div>
                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 <div class="small-box-footer">
-                <?php 
+                <?php
                                 $count = \App\Models\User::where('role','=',8)
                                 ->get()
                                 ->last();
@@ -289,13 +290,14 @@ body {
    <?php
     $user_role = \App\Models\User::findOrFail(Auth::user()->id);
    ?>
-    <div class="row <?= $user_role->role == 10 ? 'd-none' : '' ?>">
-        <div class="col-lg-3 col-6">
+    <div class="d-sm-none d-md-flex d-lg-flex d-xl-flex row <?= $user_role->role == 10 ? 'd-none' : '' ?>">
+        <div class="col-4">
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3><?php 
+                    <h3><?php
                                             $count = \App\Models\Incident::where('status','Active')
+                                            ->where('deleted_flag',0)
                                             ->get();
                                             echo count($count);
                                         ?></h3>
@@ -308,8 +310,9 @@ body {
                 <a href="{{ route('incident.index') }}" class="small-box-footer">More info <i
                         class="fas fa-arrow-circle-right"></i></a>
                 <div class="small-box-footer">
-                    <?php 
+                    <?php
                                 $count = \App\Models\Incident::where('status','Active')
+                                ->where('deleted_flag',0)
                                 ->get()
                                 ->last();
                             ?>
@@ -322,11 +325,11 @@ body {
             </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-6">
+        <div class="col-4">
             <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
-                <h3><?php 
+                <h3><?php
                                             $count = \App\Models\Incident::where('status','Resolved')
                                             ->get();
                                             echo count($count);
@@ -339,7 +342,7 @@ body {
                 </div>
                 <a href="{{ route('incident.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 <div class="small-box-footer">
-                    <?php 
+                    <?php
                                 $count = \App\Models\Incident::where('status','Resolved')
                                 ->get()
                                 ->last();
@@ -353,12 +356,12 @@ body {
             </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-6">
+        <div class="col-4">
             <!-- small box -->
             <div class="small-box bg-warning">
                 <div class="inner">
                     <h3>
-                    <?php 
+                    <?php
                                             $count = \App\Models\Incident::all();
                                             echo count($count);
                                         ?></h3>
@@ -371,7 +374,7 @@ body {
                 </div>
                 <a href="{{ route('incident.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 <div class="small-box-footer">
-                    <?php 
+                    <?php
                                 $count = \App\Models\Incident::get()
                                 ->last();
                             ?>
@@ -384,50 +387,7 @@ body {
             </div>
         </div>
     </div>
-    <!-- Map card -->
-    <div class="card bg-gradient-primary">
-        <div class="card-header border-0">
-            <h3 class="card-title">
-                <i class="fas fa-map-marker-alt mr-1"></i>
-                Visitors
-            </h3>
-            <!-- card tools -->
-            <div class="card-tools">
-                <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
-                    <i class="far fa-calendar-alt"></i>
-                </button>
-                <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
-            </div>
-            <!-- /.card-tools -->
-        </div>
-        <div class="card-body">
-            <div id="map" style="height: 500px; width: 100%;"></div>
-        </div>
-        <!-- /.card-body-->
-        <div class="card-footer bg-transparent d-none">
-            <div class="row">
-                <div class="col-4 text-center">
-                    <div id="sparkline-1"></div>
-                    <div class="text-white">Visitors</div>
-                </div>
-                <!-- ./col -->
-                <div class="col-4 text-center">
-                    <div id="sparkline-2"></div>
-                    <div class="text-white">Online</div>
-                </div>
-                <!-- ./col -->
-                <div class="col-4 text-center">
-                    <div id="sparkline-3"></div>
-                    <div class="text-white">Sales</div>
-                </div>
-                <!-- ./col -->
-            </div>
-            <!-- /.row -->
-        </div>
-    </div>
-    <!-- /.card -->
+
 
     <div class="modal fade" id="modal_incident" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
@@ -497,7 +457,49 @@ body {
         </div>
         <!-- /.modal-dialog -->
     </div>
-
+    <!-- Map card -->
+    <div class="card bg-gradient-primary">
+        <div class="card-header border-0">
+            <h3 class="card-title">
+                <i class="fas fa-map-marker-alt mr-1"></i>
+                Visitors
+            </h3>
+            <!-- card tools -->
+            <div class="card-tools">
+                <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
+                    <i class="far fa-calendar-alt"></i>
+                </button>
+                <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+            <!-- /.card-tools -->
+        </div>
+        <div class="card-body">
+            <div id="map" style="height: 500px; width: 100%;"></div>
+        </div>
+        <!-- /.card-body-->
+        <div class="card-footer bg-transparent d-none">
+            <div class="row">
+                <div class="col-4 text-center">
+                    <div id="sparkline-1"></div>
+                    <div class="text-white">Visitors</div>
+                </div>
+                <!-- ./col -->
+                <div class="col-4 text-center">
+                    <div id="sparkline-2"></div>
+                    <div class="text-white">Online</div>
+                </div>
+                <!-- ./col -->
+                <div class="col-4 text-center">
+                    <div id="sparkline-3"></div>
+                    <div class="text-white">Sales</div>
+                </div>
+                <!-- ./col -->
+            </div>
+            <!-- /.row -->
+        </div>
+    </div>
 
     <!-- <form method="POST" action="">
         @csrf
@@ -518,6 +520,88 @@ body {
         </div>
     </form> -->
     <!-- d-block d-md-none d-lg-none d-xl-none mobile only-->
+    <div class="row d-md-none d-lg-none d-xl-none">
+        <div class="col-lg-4 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3></h3>
+
+                    <p>Community Service</p>
+                </div>
+                <div class="icon">
+                <i class="fas fa-users"></i>
+              </div>
+                <a href="{{ route('community_service.create') }}" class="small-box-footer">More info <i
+                        class="fas fa-arrow-circle-right"></i></a>
+                <div class="small-box-footer">
+
+                </div>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-4 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                <h3></h3>
+
+                    <p>Medical Assistance</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-user-nurse"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <div class="small-box-footer">
+
+                </div>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-4 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>
+
+                    </h3>
+
+                    <p>Information Service</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-user-edit"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <div class="small-box-footer">
+
+                </div>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-4 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>
+                    </h3>
+
+                    <p>Totol Incidents   <?php
+                        $count = \App\Models\Incident::where('deleted_flag',0)
+                        ->get();
+                        echo count($count);
+                    ?></p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <div class="small-box-footer">
+                </div>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+
     <div class="floatingButtonWrap d-block d-md-none d-lg-none d-xl-none">
         <div class="floatingButtonInner">
             <a href="#" class="floatingButton">
@@ -648,7 +732,7 @@ function initMap() {
         //map.setCenter(bounds.getCenter());
         //map.fitBounds(bounds);
         //remove one zoom level to ensure no marker is on the edge.
-        map.setZoom(12); 
+        map.setZoom(12);
     } else {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
@@ -681,7 +765,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 </script>
 
 <script async defer
-    src="{{asset('js')}}/gmap.js">
+    src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAPS_API_KEY')}}&callback&libraries=visualization&callback=initMap">
 </script>
 <script>
 function readURL(input) {
@@ -702,7 +786,7 @@ function readURL(input) {
 }
 
 $(document).ready(function() {
-    $('#frmIncident').submit(function (e) { 
+    $('#frmIncident').submit(function (e) {
         $('#btnSubmit').css('pointer-events: none');
         $('#btnSubmit').addClass('d-none');
         $('#btnSpin').removeClass('d-none');
@@ -716,44 +800,7 @@ $(document).ready(function() {
     $('.floatingButton').click(function() {
         $('#modal_incident').modal('show');
     });
-    // $('.floatingButton').on('click',
-    //     function(e) {
-    //         e.preventDefault();
 
-    //         $(this).toggleClass('open');
-    //         if ($(this).children('.fa').hasClass('fa-plus')) {
-    //             $(this).children('.fa').removeClass('fa-plus');
-    //             $(this).children('.fa').addClass('fa-close');
-    //         } else if ($(this).children('.fa').hasClass('fa-close')) {
-    //             $(this).children('.fa').removeClass('fa-close');
-    //             $(this).children('.fa').addClass('fa-plus');
-    //         }
-    //         $('.floatingMenu').stop().slideToggle();
-    //     }
-    // );
-    // $(this).on('click', function(e) {
-
-    //     var container = $(".floatingButton");
-    //     // if the target of the click isn't the container nor a descendant of the container
-    //     if (!container.is(e.target) && $('.floatingButtonWrap').has(e.target).length === 0) {
-    //         if (container.hasClass('open')) {
-    //             container.removeClass('open');
-    //         }
-    //         if (container.children('.fa').hasClass('fa-close')) {
-    //             container.children('.fa').removeClass('fa-close');
-    //             container.children('.fa').addClass('fa-plus');
-    //         }
-    //         $('.floatingMenu').hide();
-    //     }
-
-    //     // if the target of the click isn't the container and a descendant of the menu
-    //     if (!container.is(e.target) && ($('.floatingMenu').has(e.target).length > 0)) {
-    //         $('.floatingButton').removeClass('open');
-    //         $('.floatingMenu').stop().slideToggle();
-    //     }
-    // });
-    // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
-    // demo.initChartsPages();
 });
 </script>
 @endpush

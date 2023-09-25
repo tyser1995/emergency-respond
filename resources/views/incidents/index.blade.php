@@ -33,6 +33,7 @@
                                     <th>Incident</th>
                                     <th>Description</th>
                                     <th>Location</th>
+                                    <th>Image</th>
                                     <th>Date & Time</th>
                                     <th></th>
                                 </tr>
@@ -43,7 +44,8 @@
                                         <td class="d-none">{{$incidents->id}}</td>
                                         <td>{{$incidents->incident_name}}</td>
                                         <td>{{$incidents->description}}</td>
-                                        <td>{{$incidents->location}}</td>
+                                        <td>{{$incidents->lat.', '.$incidents->lng}}</td>
+                                        <td><img src="{{ asset('incidents_img/'.$incidents->incident_name.'/'.$incidents->image) }}" style="width:100px; height:100px; border-radius: 50%;" /></td>
                                         <td>{{$incidents->datetime_incident}}</td>
                                         <td class="text-center">
                                         <!-- <a href="{{route('incident.edit', $incidents->id)}}" class="{{Auth::user()->can('incident-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-pen"></i></a> -->
