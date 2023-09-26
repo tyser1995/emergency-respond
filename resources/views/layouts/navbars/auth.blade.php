@@ -84,9 +84,9 @@
                   </li>
                   @endif
 
-                  <li class="nav-item {{ $elementActive == 'incidents' || $elementActive == 'community_service' ? 'menu-open' : '' }}">
+                  <li class="nav-item {{ $elementActive == 'incidents' || $elementActive == 'incident_archive' || $elementActive == 'community_service' || $elementActive == 'medical_assistance' ? 'menu-open' : '' }}">
                       <a href="#"
-                          class="nav-link {{ $elementActive == 'incidents' || $elementActive == 'community_service' ? 'active' : '' }}">
+                          class="nav-link {{ $elementActive == 'incidents' || $elementActive == 'incident_archive' || $elementActive == 'community_service' || $elementActive == 'medical_assistance' ? 'active' : '' }}">
                           <i class="nav-icon fas fa-file"></i>
                           <p>
                               Report Management
@@ -101,17 +101,23 @@
                               </a>
                           </li>
                           <li class="nav-item">
+                            <a href="{{ route('incident_archive.index') }}" class="nav-link {{ $elementActive == 'incident_archive' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Incident Archived</p>
+                            </a>
+                        </li>
+                          <li class="nav-item">
                             <a href="{{ route('community_service.index') }}" class="nav-link {{ $elementActive == 'community_service' ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Community Service</p>
                             </a>
                         </li>
-                          <!-- <li class="nav-item">
-                              <a href="./index2.html" class="nav-link active">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>Roles</p>
-                              </a>
-                          </li> -->
+                        <li class="nav-item">
+                            <a href="{{ route('blood_donation.index') }}" class="nav-link {{ $elementActive == 'medical_assistance' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Medical Assistance</p>
+                            </a>
+                        </li>
                       </ul>
                   </li>
 

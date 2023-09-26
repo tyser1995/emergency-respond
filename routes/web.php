@@ -53,6 +53,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('incident_types/delete/{id}', ['as' => 'incident_types/delete/{id}', 'uses' => 'App\Http\Controllers\IncidentTypesController@delete']);
     Route::resource('incident_type', 'App\Http\Controllers\IncidentTypesController');
 
+    //Incidents Archived
+    Route::resource('incident_archive', 'App\Http\Controllers\IncidentArchiveController');
+
+    //Medical Assistance
+    //Blood Donation
+    Route::get('blood_donations',  ['as' => 'blood_donations', 'uses' => 'App\Http\Controllers\MedicalAssistanceBloodDonationController@index']);
+    Route::resource('blood_donation', 'App\Http\Controllers\MedicalAssistanceBloodDonationController');
+
     //User Management
     Route::get('employees', ['as' => 'employees', 'uses' => 'App\Http\Controllers\EmployeeController@index']);
     Route::get('employees/delete/{id}', ['as' => 'employees/delete/{id}', 'uses' => 'App\Http\Controllers\EmployeeController@delete']);

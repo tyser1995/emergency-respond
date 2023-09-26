@@ -159,235 +159,238 @@ body {
     <!-- /.content-header -->
         <!-- /.card -->
     <!-- Small boxes (Stat box) -->
-    <div class="row d-sm-none d-md-flex d-lg-flex d-xl-flex">
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-                <div class="inner">
+    @if (Auth::user()->role != 3 && Auth::user()->role != 10)
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3><?php
+                                                $count = \App\Models\User::all();
+                                                echo count($count);
+                                            ?></h3>
+
+                        <p>Total User</p>
+                    </div>
+                    <div class="icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                    <a href="{{ route('users') }}" class="small-box-footer">More info <i
+                            class="fas fa-arrow-circle-right"></i></a>
+                    <div class="small-box-footer">
+                        <?php
+                                    $count = \App\Models\User::get()->last();
+                                ?>
+                        @if (!empty($count))
+                        <i class="fa fa-refresh"></i> Update Since {{$count->created_at->diffForHumans()}}
+                        @else
+                        {{__('No Records found')}}
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
                     <h3><?php
-                                            $count = \App\Models\User::all();
-                                            echo count($count);
-                                        ?></h3>
+                                                $count = \App\Models\User::where('role','=',9)
+                                                ->get();
+                                                echo count($count);
+                                            ?></h3>
 
-                    <p>Total User</p>
-                </div>
-                <div class="icon">
-                <i class="fas fa-users"></i>
-              </div>
-                <a href="{{ route('users') }}" class="small-box-footer">More info <i
-                        class="fas fa-arrow-circle-right"></i></a>
-                <div class="small-box-footer">
-                    <?php
-                                $count = \App\Models\User::get()->last();
-                            ?>
-                    @if (!empty($count))
-                    <i class="fa fa-refresh"></i> Update Since {{$count->created_at->diffForHumans()}}
-                    @else
-                    {{__('No Records found')}}
-                    @endif
+                        <p>Total GBI</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <div class="small-box-footer">
+                        <?php
+                                    $count = \App\Models\User::where('role','=',9)
+                                    ->get()
+                                    ->last();
+                                ?>
+                        @if (!empty($count))
+                        <i class="fa fa-refresh"></i> Update Since {{$count->created_at->diffForHumans()}}
+                        @else
+                        {{__('No Records found')}}
+                        @endif
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-                <div class="inner">
-                <h3><?php
-                                            $count = \App\Models\User::where('role','=',9)
-                                            ->get();
-                                            echo count($count);
-                                        ?></h3>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>
+                        <?php
+                                                $count = \App\Models\User::where('role','=',10)
+                                                ->get();
+                                                echo count($count);
+                                            ?></h3>
+                        </h3>
 
-                    <p>Total GBI</p>
-                </div>
-                <div class="icon">
-                    <i class="fas fa-user-friends"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                <div class="small-box-footer">
-                    <?php
-                                $count = \App\Models\User::where('role','=',9)
-                                ->get()
-                                ->last();
-                            ?>
-                    @if (!empty($count))
-                    <i class="fa fa-refresh"></i> Update Since {{$count->created_at->diffForHumans()}}
-                    @else
-                    {{__('No Records found')}}
-                    @endif
+                        <p>Total Local Resident</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <div class="small-box-footer">
+                        <?php
+                                    $count = \App\Models\User::where('role','=',10)
+                                    ->get()
+                                    ->last();
+                                ?>
+                        @if (!empty($count))
+                        <i class="fa fa-refresh"></i> Update Since {{ $count->created_at->diffForHumans() }}
+                        @else
+                        {{__('No Records found')}}
+                        @endif
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3>
-                    <?php
-                                            $count = \App\Models\User::where('role','=',10)
-                                            ->get();
-                                            echo count($count);
-                                        ?></h3>
-                    </h3>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>
+                        <?php
+                                                $count = \App\Models\User::where('role','=',8)
+                                                ->get();
+                                                echo count($count);
+                                            ?>
+                        </h3>
 
-                    <p>Total Local Resident</p>
-                </div>
-                <div class="icon">
-                    <i class="fas fa-user"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                <div class="small-box-footer">
+                        <p>Total NGO Member</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-user-nurse"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <div class="small-box-footer">
                     <?php
-                                $count = \App\Models\User::where('role','=',10)
-                                ->get()
-                                ->last();
-                            ?>
-                    @if (!empty($count))
-                    <i class="fa fa-refresh"></i> Update Since {{ $count->created_at->diffForHumans() }}
-                    @else
-                    {{__('No Records found')}}
-                    @endif
+                                    $count = \App\Models\User::where('role','=',8)
+                                    ->get()
+                                    ->last();
+                                ?>
+                        @if (!empty($count))
+                        <i class="fa fa-refresh"></i> Update Since {{$count->created_at->diffForHumans()}}
+                        @else
+                        {{__('No Records found')}}
+                        @endif
+                    </div>
                 </div>
             </div>
+            <!-- ./col -->
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-                <div class="inner">
-                    <h3>
-                    <?php
-                                            $count = \App\Models\User::where('role','=',8)
-                                            ->get();
-                                            echo count($count);
-                                        ?>
-                    </h3>
-
-                    <p>Total NGO Member</p>
-                </div>
-                <div class="icon">
-                    <i class="fas fa-user-nurse"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                <div class="small-box-footer">
-                <?php
-                                $count = \App\Models\User::where('role','=',8)
-                                ->get()
-                                ->last();
-                            ?>
-                    @if (!empty($count))
-                    <i class="fa fa-refresh"></i> Update Since {{$count->created_at->diffForHumans()}}
-                    @else
-                    {{__('No Records found')}}
-                    @endif
-                </div>
-            </div>
-        </div>
-        <!-- ./col -->
-    </div>
+    @endif
    <?php
-    $user_role = \App\Models\User::findOrFail(Auth::user()->id);
+        $user_role = \App\Models\User::findOrFail(Auth::user()->id);
    ?>
-    <div class="d-sm-none d-md-flex d-lg-flex d-xl-flex row <?= $user_role->role == 10 ? 'd-none' : '' ?>">
-        <div class="col-4">
-            <!-- small box -->
-            <div class="small-box bg-info">
-                <div class="inner">
+   @if (Auth::user()->role == 3)
+        <div class="row">
+            <div class="col-4">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3><?php
+                                                $count = \App\Models\Incident::where('status','Active')
+                                                ->where('deleted_flag',0)
+                                                ->get();
+                                                echo count($count);
+                                            ?></h3>
+
+                        <p>Active Incidents</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-bed"></i>
+                    </div>
+                    <a href="{{ route('incident.index') }}" class="small-box-footer">More info <i
+                            class="fas fa-arrow-circle-right"></i></a>
+                    <div class="small-box-footer">
+                        <?php
+                                    $count = \App\Models\Incident::where('status','Active')
+                                    ->where('deleted_flag',0)
+                                    ->get()
+                                    ->last();
+                                ?>
+                        @if (!empty($count))
+                        <i class="fa fa-refresh"></i> Update Since {{$count->created_at->diffForHumans()}}
+                        @else
+                        {{__('No Records found')}}
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-4">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
                     <h3><?php
-                                            $count = \App\Models\Incident::where('status','Active')
-                                            ->where('deleted_flag',0)
-                                            ->get();
-                                            echo count($count);
-                                        ?></h3>
+                                                $count = \App\Models\Incident::where('status','Resolved')
+                                                ->get();
+                                                echo count($count);
+                                            ?></h3>
 
-                    <p>Active Incidents</p>
+                        <p>Resolved Incidents</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <a href="{{ route('incident.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <div class="small-box-footer">
+                        <?php
+                                    $count = \App\Models\Incident::where('status','Resolved')
+                                    ->get()
+                                    ->last();
+                                ?>
+                        @if (!empty($count))
+                        <i class="fa fa-refresh"></i> Update Since {{$count->created_at->diffForHumans()}}
+                        @else
+                        {{__('No Records found')}}
+                        @endif
+                    </div>
                 </div>
-                <div class="icon">
-                    <i class="fas fa-bed"></i>
-                </div>
-                <a href="{{ route('incident.index') }}" class="small-box-footer">More info <i
-                        class="fas fa-arrow-circle-right"></i></a>
-                <div class="small-box-footer">
-                    <?php
-                                $count = \App\Models\Incident::where('status','Active')
-                                ->where('deleted_flag',0)
-                                ->get()
-                                ->last();
-                            ?>
-                    @if (!empty($count))
-                    <i class="fa fa-refresh"></i> Update Since {{$count->created_at->diffForHumans()}}
-                    @else
-                    {{__('No Records found')}}
-                    @endif
+            </div>
+            <!-- ./col -->
+            <div class="col-4">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>
+                        <?php
+                                                $count = \App\Models\Incident::all();
+                                                echo count($count);
+                                            ?></h3>
+                        </h3>
+
+                        <p>Total Incidents</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-procedures"></i>
+                    </div>
+                    <a href="{{ route('incident.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <div class="small-box-footer">
+                        <?php
+                                    $count = \App\Models\Incident::get()
+                                    ->last();
+                                ?>
+                        @if (!empty($count))
+                        <i class="fa fa-refresh"></i> Update Since {{ $count->created_at->diffForHumans() }}
+                        @else
+                        {{__('No Records found')}}
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- ./col -->
-        <div class="col-4">
-            <!-- small box -->
-            <div class="small-box bg-success">
-                <div class="inner">
-                <h3><?php
-                                            $count = \App\Models\Incident::where('status','Resolved')
-                                            ->get();
-                                            echo count($count);
-                                        ?></h3>
-
-                    <p>Resolved Incidents</p>
-                </div>
-                <div class="icon">
-                    <i class="fas fa-handshake"></i>
-                </div>
-                <a href="{{ route('incident.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                <div class="small-box-footer">
-                    <?php
-                                $count = \App\Models\Incident::where('status','Resolved')
-                                ->get()
-                                ->last();
-                            ?>
-                    @if (!empty($count))
-                    <i class="fa fa-refresh"></i> Update Since {{$count->created_at->diffForHumans()}}
-                    @else
-                    {{__('No Records found')}}
-                    @endif
-                </div>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-4">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3>
-                    <?php
-                                            $count = \App\Models\Incident::all();
-                                            echo count($count);
-                                        ?></h3>
-                    </h3>
-
-                    <p>Total Incidents</p>
-                </div>
-                <div class="icon">
-                    <i class="fas fa-procedures"></i>
-                </div>
-                <a href="{{ route('incident.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                <div class="small-box-footer">
-                    <?php
-                                $count = \App\Models\Incident::get()
-                                ->last();
-                            ?>
-                    @if (!empty($count))
-                    <i class="fa fa-refresh"></i> Update Since {{ $count->created_at->diffForHumans() }}
-                    @else
-                    {{__('No Records found')}}
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-
+    @endif
 
     <div class="modal fade" id="modal_incident" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
@@ -520,87 +523,90 @@ body {
         </div>
     </form> -->
     <!-- d-block d-md-none d-lg-none d-xl-none mobile only-->
-    <div class="row d-md-none d-lg-none d-xl-none">
-        <div class="col-lg-4 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-                <div class="inner">
-                    <h3></h3>
 
-                    <p>Community Service</p>
-                </div>
-                <div class="icon">
-                <i class="fas fa-users"></i>
-              </div>
-                <a href="{{ route('community_service.create') }}" class="small-box-footer">More info <i
-                        class="fas fa-arrow-circle-right"></i></a>
-                <div class="small-box-footer">
+    @if (Auth::user()->role == 10)
+        <div class="row">
+            <div class="col-lg-4 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3></h3>
 
-                </div>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-4 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-                <div class="inner">
-                <h3></h3>
-
-                    <p>Medical Assistance</p>
-                </div>
-                <div class="icon">
-                    <i class="fas fa-user-nurse"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                <div class="small-box-footer">
-
-                </div>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-4 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3>
-
-                    </h3>
-
-                    <p>Information Service</p>
-                </div>
-                <div class="icon">
-                    <i class="fas fa-user-edit"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                <div class="small-box-footer">
-
-                </div>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-4 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-                <div class="inner">
-                    <h3>
-                    </h3>
-
-                    <p>Totol Incidents   <?php
-                        $count = \App\Models\Incident::where('deleted_flag',0)
-                        ->get();
-                        echo count($count);
-                    ?></p>
-                </div>
-                <div class="icon">
+                        <p>Community Service</p>
+                    </div>
+                    <div class="icon">
                     <i class="fas fa-users"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                <div class="small-box-footer">
+                    <a href="{{ route('community_service.create') }}" class="small-box-footer">More info <i
+                            class="fas fa-arrow-circle-right"></i></a>
+                    <div class="small-box-footer">
+
+                    </div>
                 </div>
             </div>
+            <!-- ./col -->
+            <div class="col-lg-4 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                    <h3></h3>
+
+                        <p>Medical Assistance</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-user-nurse"></i>
+                    </div>
+                    <a href="{{route('blood_donation.create')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <div class="small-box-footer">
+
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-4 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>
+
+                        </h3>
+
+                        <p>Information Service</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-user-edit"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <div class="small-box-footer">
+
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-4 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>
+                        </h3>
+
+                        <p>Totol Incidents   <?php
+                            $count = \App\Models\Incident::where('deleted_flag',0)
+                            ->get();
+                            echo count($count);
+                        ?></p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <div class="small-box-footer">
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
         </div>
-        <!-- ./col -->
-    </div>
+    @endif
 
     <div class="floatingButtonWrap d-block d-md-none d-lg-none d-xl-none">
         <div class="floatingButtonInner">
@@ -640,22 +646,23 @@ body {
 @endsection
 
 @push('scripts')
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    {{-- <script>
+
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('{{env('PUSHER_APP_KEY')}}', {
+            cluster: '{{env('PUSHER_APP_CLUSTER')}}'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            alert(JSON.stringify(data));
+        });
+    </script> --}}
+
 <script>
-// Webcam.set({
-//     width: 490,
-//     height: 350,
-//     image_format: 'jpeg',
-//     jpeg_quality: 90
-// });
-
-// Webcam.attach( '#my_camera' );
-
-// function take_snapshot() {
-//     Webcam.snap( function(data_uri) {
-//         $(".image-tag").val(data_uri);
-//         document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
-//     } );
-// }
 
 // Note: This example requires that you consent to location sharing when
 // prompted by your browser. If you see the error "The Geolocation service
@@ -786,6 +793,12 @@ function readURL(input) {
 }
 
 $(document).ready(function() {
+    // var user = "{{ Auth::user()->name; }}";
+    // var role = "{{ Auth::user()->role; }}";
+    // setInterval(function(){
+    //     toastr.error('Flood Incident ' + user + " " + role);
+    // },2000);
+
     $('#frmIncident').submit(function (e) {
         $('#btnSubmit').css('pointer-events: none');
         $('#btnSubmit').addClass('d-none');

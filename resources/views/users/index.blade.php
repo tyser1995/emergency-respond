@@ -151,7 +151,7 @@ $(document).ready(function() {
     });
 
 
-    $('.btnCanDestroy').click(function() {
+    $('#tblUser tbody').on('click','.btnCanDestroy',function() {
             Swal.fire({
                 // title: 'Error!',
                 text: 'Do you want to remove ' + $(this).val() + ' user?',
