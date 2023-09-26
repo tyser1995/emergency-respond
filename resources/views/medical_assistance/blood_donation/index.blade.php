@@ -30,6 +30,9 @@
                                     <th>Organization</th>
                                     <th>Message</th>
                                     <th>Blood Type</th>
+                                    @if (Auth::user()->role == 1)
+                                    <th></th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,6 +45,15 @@
                                         <td>{{$blood_donations->organization}}</td>
                                         <td>{{$blood_donations->message}}</td>
                                         <td>{{$blood_donations->blood_type}}</td>
+                                        @if (Auth::user()->role == 1)
+                                        <td>
+                                            <button type="button" data-id="{{$blood_donations->id}}"
+                                                value="{{$blood_donations->fullname}}"
+                                                class="btnCanDestroy btn btn-danger btn-sm"><i
+                                                    class="fas fa-trash"></i></button>
+                                        </td>
+                                        @endif
+
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -59,6 +71,30 @@
     $(document).ready(function () {
         $('#tblDepartmentType').DataTable({
             order:[[1,'asc']]
+        });
+
+
+        $('#tblDepartmentType tbody').on('click','.btnCanDestroy',function() {
+            Swal.fire({
+                // title: 'Error!',
+                text: 'Do you want to remove ' + $(this).val() + '?',
+                icon: 'question',
+                allowOutsideClick:false,
+                confirmButtonText: 'Yes',
+                showCancelButton: true,
+            }).then((result) => {
+                if (result.value) {
+                    window.location.href = base_url + "/blood_donations/delete/" + $(this).data('id');
+                    Swal.fire({
+                        title: $(this).val() + ' Deleted Successfully',
+                        icon: 'success',
+                        allowOutsideClick:false,
+                        confirmButtonText: 'Close',
+                    }).then(()=>{
+                        $('#tblUser').DataTable().ajax.reload();
+                    });
+                }
+            });
         });
     });
 </script>

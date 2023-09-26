@@ -96,4 +96,10 @@ class CommunityServiceController extends Controller
     {
         //
     }
+
+    public function delete($id){
+        $community_service = CommunityService::findOrfail($id);
+        $community_service->delete();
+        return redirect()->route('community_service.index')->withError('Deleted Successfully');
+    }
 }

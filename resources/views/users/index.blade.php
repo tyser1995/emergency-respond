@@ -174,7 +174,7 @@ $(document).ready(function() {
             });
         });
 
-        $('.btnCanVerify').click(function() {
+        $('#tblUser tbody').on('click','.btnCanVerify',function() {
             Swal.fire({
                 // title: 'Error!',
                 text: 'Verify ' + $(this).val() + ' user?',
@@ -196,18 +196,6 @@ $(document).ready(function() {
                 }
             });
         });
-
-    // $('#example').DataTable({
-    //     deferRender: true,
-    //     // "dom": 'rtip',
-    //     paging: true,
-    //     // pageLength: 5,
-    //     lengthChange: true, //show entries
-    //     buttons: ['copy', 'excel', 'pdf', 'colvis']
-    // });
-
-    // $('#example').DataTable().buttons().container()
-    //     .appendTo('#example_wrapper .col-md-6:eq(0)');
 
 });
 </script>

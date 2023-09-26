@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Medical Assistance
     //Blood Donation
     Route::get('blood_donations',  ['as' => 'blood_donations', 'uses' => 'App\Http\Controllers\MedicalAssistanceBloodDonationController@index']);
+    Route::get('blood_donations/delete/{id}', ['as' => 'blood_donations/delete/{id}', 'uses' => 'App\Http\Controllers\MedicalAssistanceBloodDonationController@delete']);
     Route::resource('blood_donation', 'App\Http\Controllers\MedicalAssistanceBloodDonationController');
 
     //User Management
@@ -95,7 +96,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('contact', 'App\Http\Controllers\ContactController');
 
     //Community Service
-
+    Route::get('community_services/delete/{id}', ['as' => 'community_services/delete/{id}', 'uses' => 'App\Http\Controllers\CommunityServiceController@delete']);
     Route::resource('community_service', 'App\Http\Controllers\CommunityServiceController');
 
     //Roles

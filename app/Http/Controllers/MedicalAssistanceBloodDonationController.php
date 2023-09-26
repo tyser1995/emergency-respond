@@ -98,4 +98,12 @@ class MedicalAssistanceBloodDonationController extends Controller
     {
         //
     }
+
+    public function delete($id){
+        $blood_donation = MedicalAssistanceBloodDonation::findOrfail($id);
+        $blood_donation->delete();
+        return redirect()->route('blood_donation.index')->withError('Deleted Successfully');
+    }
+
+
 }

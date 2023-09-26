@@ -29,6 +29,9 @@
                                     <th>Email</th>
                                     <th>Organization</th>
                                     <th>Message</th>
+                                    @if (Auth::user()->role == 1)
+                                    <th></th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,6 +43,14 @@
                                         <td>{{$community_services->email}}</td>
                                         <td>{{$community_services->organization}}</td>
                                         <td>{{$community_services->message}}</td>
+                                        @if (Auth::user()->role == 1)
+                                        <td>
+                                            <button type="button" data-id="{{$community_services->id}}"
+                                                value="{{$community_services->fullname}}"
+                                                class="btnCanDestroy btn btn-danger btn-sm"><i
+                                                    class="fas fa-trash"></i></button>
+                                        </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -57,6 +68,30 @@
     $(document).ready(function () {
         $('#tblDepartmentType').DataTable({
             order:[[1,'asc']]
+        });
+
+
+        $('#tblDepartmentType tbody').on('click','.btnCanDestroy',function() {
+            Swal.fire({
+                // title: 'Error!',
+                text: 'Do you want to remove ' + $(this).val() + '?',
+                icon: 'question',
+                allowOutsideClick:false,
+                confirmButtonText: 'Yes',
+                showCancelButton: true,
+            }).then((result) => {
+                if (result.value) {
+                    window.location.href = base_url + "/community_services/delete/" + $(this).data('id');
+                    Swal.fire({
+                        title: $(this).val() + ' Deleted Successfully',
+                        icon: 'success',
+                        allowOutsideClick:false,
+                        confirmButtonText: 'Close',
+                    }).then(()=>{
+                        $('#tblUser').DataTable().ajax.reload();
+                    });
+                }
+            });
         });
     });
 </script>
